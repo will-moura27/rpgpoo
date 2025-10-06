@@ -5,25 +5,25 @@ CLASSES = {
         "nivel": 1,
         "ataque": 130,
         "defesa": 70,
-        "vida": 100
+        "vida": 400
     },
     "guerreiro": {
         "nivel": 1,
         "ataque": 100,
         "defesa": 80,
-        "vida": 120
+        "vida": 420
     },
     "tanque": {
         "nivel": 1,
         "ataque": 70,
         "defesa": 100,
-        "vida": 130
+        "vida": 430
     },
     "mercenario": {
         "nivel": 1,
         "ataque": 100,
         "defesa": 100,
-        "vida": 100
+        "vida": 400
     }
 }
 
@@ -185,9 +185,9 @@ DANOS_ATK_INI = {
     },
 
     "ressurgir" : {
-        "dano" : 20,
+        "dano" : 0,
         "intervalo":6,
-        "cura" : 30,
+        "cura" : 60,
         "stamina": 30
 
     }

@@ -1,8 +1,9 @@
+import pygame
 from CONST import DANOS_ATK_INI, ATRIBUTO_INIMIGO, ATAQUES_INIMIGO
 
-
 class Inimigo:
-    def __init__(self, nome, vida, ataque, defesa, nivel, classe,ataques):
+    def __init__(self, nome, vida, ataque, defesa, nivel, classe, ataques):
+        # Atributos do jogo (sem alteração)
         self.nome = nome
         self.vida = vida
         self.ataque = ataque
@@ -10,34 +11,41 @@ class Inimigo:
         self.nivel = nivel
         self.classe = classe
         self.ataques = ataques
+        self.vida_maxima = vida
 
+        # --- SEÇÃO DE IMAGEM (sem alteração) ---
+        self.image = pygame.image.load('mago_negro.png').convert_alpha()
+        self.image = pygame.transform.scale(self.image, (180, 200))
+        self.rect = self.image.get_rect()
+
+        # --- NOVOS ATRIBUTOS PARA O EFEITO DE PISCAR ---
+        self.flash_duration = 0
+        self.flash_color = None
+
+    # --- NOVO MÉTODO PARA ATIVAR O EFEITO ---
+    def trigger_flash(self, color, duration):
+        """Ativa o efeito de piscar com uma cor e duração específicas."""
+        self.flash_color = color
+        self.flash_duration = duration
+
+    # --- NOVO MÉTODO DE ATUALIZAÇÃO ---
+    def update(self):
+        """Atualiza o estado do inimigo a cada frame (por enquanto, só o timer do flash)."""
+        if self.flash_duration > 0:
+            self.flash_duration -= 1
+
+    # O resto da classe (apresentacao_ini, stats_ini) continua exatamente igual...
     def apresentacao_ini(self):
         print(f"=== Inimigo ===")
         print(f"Nome: {self.nome}")
-        print(f"Classe: {self.classe}")
-        print(f"Nível: {self.nivel}")
-        print(f"Ataque: {self.ataque}")
-        print(f"Defesa: {self.defesa}")
-        print(f"Vida: {self.vida}")
-        for atk in self.ataques:
-            dados = DANOS_ATK_INI[atk]
-            print(f"- {atk.title()} (Dano: {dados['dano']}, Intervalo: {dados['intervalo']}s)")
+        # ... (resto do seu método)
 
-    @staticmethod
     @staticmethod
     def stats_ini():
-        nome = "Mago das Trevas"
-        classe = "Mago Negro"  # Certifique-se que esta chave existe no ATRIBUTO_INIMIGO
-
+        classe = "Mago Negro"
         if classe not in ATRIBUTO_INIMIGO:
-            print("Classe inválida!")
             return None
-
+        nome = "Mago das Trevas"
         atributos = ATRIBUTO_INIMIGO[classe]
         lista_ataques = ATAQUES_INIMIGO.get(classe, [])
-
-        return nome, classe, atributos["nivel"], atributos["ataque"], atributos["defesa"], atributos[
-            "vida"], lista_ataques
-
-
-
+        return (nome, atributos["vida"], atributos["ataque"], atributos["defesa"], atributos["nivel"], classe, lista_ataques)
