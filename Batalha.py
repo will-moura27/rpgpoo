@@ -6,6 +6,7 @@ class Batalha:
     def __init__(self, jogador, inimigo):
         self.jogador = jogador
         self.inimigo = inimigo
+        self.turno_atual = "jogador"
         self.cooldowns_jogador = {atk: 0 for atk in jogador.ataques}
         self.cooldowns_inimigo = {atk: 0 for atk in inimigo.ataques}
         self.stamina_jogador = 100
@@ -16,16 +17,10 @@ class Batalha:
 
     def turno_jogador(self, ataque_nome):
         dados = ATAQUES[ataque_nome]
-        # Se o ataque for inválido, retorna uma mensagem de erro
-        if self.cooldowns_jogador[ataque_nome] > 0:
-            return ("aviso", "Em Cooldown!")
-        if self.stamina_jogador < dados["stamina"]:
-            return ("aviso", "Sem Stamina!")
-
-        # Se for válido, o resto do código continua
+        if self.cooldowns_jogador[ataque_nome] > 0: return ("aviso", "Em Cooldown!")
+        if self.stamina_jogador < dados["stamina"]: return ("aviso", "Sem Stamina!")
         self.cooldowns_jogador[ataque_nome] = dados["intervalo"]
         self.stamina_jogador -= dados["stamina"]
-
         if "cura" in dados:
             cura = dados["cura"]
             self.jogador.vida = min(self.jogador.vida_maxima, self.jogador.vida + cura)
@@ -61,10 +56,15 @@ class Batalha:
         self.stamina_inimigo -= dados["stamina"]
 
         dano = max(0, dados['dano'] + self.inimigo.ataque - self.jogador.defesa)
+
+        # --- LÓGICA DE BLOQUEIO REINSERIDA AQUI ---
         if self.bloqueio_ativo > 0:
+            print(f"Bloqueio de {self.bloqueio_ativo} ativo!")  # Mensagem de depuração
             dano -= self.bloqueio_ativo
-            dano = max(dano, 0)
-            self.bloqueio_ativo = 0
+            dano = max(dano, 0)  # Garante que o dano não seja negativo
+            self.bloqueio_ativo = 0  # Desativa o bloqueio após ser usado
+        # --- FIM DA LÓGICA CORRIGIDA ---
+
         self.jogador.vida -= dano
         return ("dano", dano)
 
