@@ -147,10 +147,10 @@ ATRIBUTO_INIMIGO = {
     },
     "Mago Negro": {
         "nivel": 3,
-        "ataque": 150,
+        "ataque": 120,
         "defesa": 100,
-        "vida": 150,
-        "stamina": 100
+        "vida": 350,
+        "stamina": 200
 
     }
 }
@@ -187,8 +187,8 @@ DANOS_ATK_INI = {
     "ressurgir" : {
         "dano" : 0,
         "intervalo":6,
-        "cura" : 60,
-        "stamina": 30
+        "cura" : 150,
+        "stamina": 60
 
     }
 }
