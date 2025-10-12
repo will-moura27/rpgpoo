@@ -72,6 +72,18 @@ tempo_do_ataque_inimigo = 0
 mensagem_fim_de_jogo = ""
 
 # --- ELEMENTOS DA TELA DE SELEÇÃO ---
+card_images = {}
+for nome_classe in CLASSES.keys():
+    try:
+        filename = f"card_{nome_classe}.png"
+        image = pygame.image.load(filename).convert()
+        image = pygame.transform.scale(image, (150, 200))
+        card_images[nome_classe] = image
+    except pygame.error:
+        print(f"Aviso: Imagem '{filename}' não encontrada. Usando cor sólida.")
+        image = pygame.Surface((150, 200))
+        image.fill((140, 0, 211))
+        card_images[nome_classe] = image
 botoes_classe = {}
 lista_classes = list(CLASSES.keys())
 pos_x_inicial = 150
@@ -83,6 +95,8 @@ for i, nome_classe in enumerate(lista_classes):
     botao_rect.center = (pos_x, pos_y_inicial)
     botoes_classe[nome_classe] = botao_rect
 
+hovered_class = None
+
 # --- GAME LOOP ---
 while rodando:
     clock.tick(60)
@@ -92,6 +106,13 @@ while rodando:
         if evento.type == pygame.QUIT:
             rodando = False
         if game_state == "escolha_personagem":
+            if evento.type == pygame.MOUSEMOTION:
+                pos_mouse = pygame.mouse.get_pos()
+                hovered_class = None
+                for nome_classe, botao_rect in botoes_classe.items():
+                    if botao_rect.collidepoint(pos_mouse):
+                        hovered_class = nome_classe
+                        break
             if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:
                 pos_mouse = pygame.mouse.get_pos()
                 for nome_classe, botao_rect in botoes_classe.items():
@@ -164,18 +185,30 @@ while rodando:
     # --- LÓGICA DE DESENHO ---
     game_surface.blit(background_image, (0, 0))
     if game_state == "escolha_personagem":
-        desenhar_texto(game_surface, "Escolha sua Classe", 60, LARGURA_TELA / 2, 100)
+        # Altere a cor do título principal aqui
+        desenhar_texto(game_surface, "Escolha sua Classe", 60, LARGURA_TELA / 2, 100, cor=(255, 215, 0))  # Ex: Dourado
+
         for nome_classe, botao_rect in botoes_classe.items():
-            pygame.draw.rect(game_surface, (140, 0, 211), botao_rect, border_radius=15)
-            pygame.draw.rect(game_surface, (0, 0, 0), botao_rect, 3, border_radius=15)
-            desenhar_texto(game_surface, nome_classe.title(), 30, botao_rect.centerx, botao_rect.top + 20)
-            stats = CLASSES[nome_classe]
-            desenhar_texto(game_surface, f"HP: {stats['vida']}", 22, botao_rect.centerx, botao_rect.centery - 10,
-                           cor=(200, 200, 200))
-            desenhar_texto(game_surface, f"ATK: {stats['ataque']}", 22, botao_rect.centerx, botao_rect.centery + 15,
-                           cor=(200, 200, 200))
-            desenhar_texto(game_surface, f"DEF: {stats['defesa']}", 22, botao_rect.centerx, botao_rect.centery + 40,
-                           cor=(200, 200, 200))
+            game_surface.blit(card_images[nome_classe], botao_rect)
+
+            cor_borda = (255, 255, 255) if nome_classe == hovered_class else (0, 0, 0)
+            pygame.draw.rect(game_surface, cor_borda, botao_rect, 3, border_radius=15)
+
+            # Altere a cor dos nomes das classes aqui
+            desenhar_texto(game_surface, nome_classe.title(), 30, botao_rect.centerx, botao_rect.top + 15,
+                           cor=(137, 19, 155))  # Ex: Branco
+
+            if nome_classe == hovered_class:
+                stats = CLASSES[nome_classe]
+                # Altere a cor dos textos de atributos aqui
+                cor_dos_stats = (137, 19, 155)  # Ex: Azul claro
+                desenhar_texto(game_surface, f"HP: {stats['vida']}", 22, botao_rect.centerx, botao_rect.centery - 10,
+                               cor=cor_dos_stats)
+                desenhar_texto(game_surface, f"ATK: {stats['ataque']}", 22, botao_rect.centerx, botao_rect.centery + 15,
+                               cor=cor_dos_stats)
+                desenhar_texto(game_surface, f"DEF: {stats['defesa']}", 22, botao_rect.centerx, botao_rect.centery + 40,
+                               cor=cor_dos_stats)
+
     elif game_state == "batalha":
         game_surface.blit(jogador.image, jogador.rect)
         game_surface.blit(inimigo.image, inimigo.rect)
@@ -198,13 +231,10 @@ while rodando:
                                   batalha.stamina_jogador, 100)
         desenhar_texto(game_surface, f"{inimigo.nome} ({inimigo.classe.title()})", 25, inimigo.rect.centerx,
                        inimigo.rect.top + 245)
-
-        # --- NOVO BLOCO PARA O STATUS DE STUN DO INIMIGO ---
         if batalha.stun_inimigo > 0:
             texto_stun = f"Atordoado: {batalha.stun_inimigo}t"
             desenhar_texto(game_surface, texto_stun, 22, inimigo.rect.centerx, inimigo.rect.top + 270,
                            cor=(255, 255, 0))
-
         desenhar_texto(game_surface, "HP", 22, inimigo.rect.left - 25, inimigo.rect.top + 198)
         desenhar_texto(game_surface, "STM", 22, inimigo.rect.left - 25, inimigo.rect.top + 223)
         desenhar_barra_de_vida(game_surface, inimigo.rect.left, inimigo.rect.top + 200, inimigo.vida,

@@ -13,13 +13,13 @@ CLASSES = {
         "defesa": 80,
         "vida": 420
     },
-    "tanque": {
+    "suporte": {
         "nivel": 1,
         "ataque": 70,
         "defesa": 100,
         "vida": 430
     },
-    "mercenario": {
+    "atirador": {
         "nivel": 1,
         "ataque": 100,
         "defesa": 100,
@@ -133,8 +133,8 @@ ATAQUES = {
 ATAQUES_POR_CLASSE = {
     "mago": ["bola de fogo", "raio do trovão", "cura divina", "bloqueio astral"],
     "guerreiro": ["espada flamejante", "corte celestial", "furia do berserker", "escudo aegis"],
-    "tanque": ["benção dos céus", "lamaçal", "luz de espadas", "escudo aegis"],
-    "mercenario": ["emboscada da meia-noite", "tiro certo", "rebite", "investida psicotica"]
+    "suporte": ["benção dos céus", "lamaçal", "luz de espadas", "escudo aegis"],
+    "atirador": ["emboscada da meia-noite", "tiro certo", "rebite", "investida psicotica"]
 }
 
 ATRIBUTO_INIMIGO = {
