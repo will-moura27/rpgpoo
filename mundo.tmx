@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="23">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="25">
  <tileset firstgid="1" source="Cliff_tileset.tsx"/>
  <tileset firstgid="241" source="object- layer.tsx"/>
  <layer id="1" name="chao" width="30" height="20">
@@ -50,6 +50,15 @@
 153,154,155,78,78,78,78,78,78,78,78,78,78,153,154,155,157,158,159,78,78,78,78,78,78,78,78,78,78,78
 </data>
  </layer>
+ <objectgroup id="4" name="Inimigos">
+  <object id="23" x="308" y="84">
+   <properties>
+    <property name="enemy_type" value="slime_patrol"/>
+    <property name="patrol_range" type="int" value="100"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
  <objectgroup id="3" name="Colisao">
   <object id="1" x="6" y="16" width="28" height="614"/>
   <object id="2" x="48" y="18" width="904" height="10"/>
