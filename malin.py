@@ -222,7 +222,7 @@ while rodando:
                 # --- SEÇÃO CORRIGIDA ---
                 # Reposiciona os sprites para o layout de batalha
                 jogador.rect.bottomleft = (150, 500)
-                inimigo.rect.topright = (650, 4)
+                inimigo.rect.topright = (650, 40)
                 # --- FIM DA SEÇÃO CORRIGIDA ---
 
                 game_state = "batalha"
