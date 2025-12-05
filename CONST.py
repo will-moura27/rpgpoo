@@ -29,23 +29,23 @@ CLASSES = {
 
 ATAQUES = {
     "bola de fogo" : {
-        "dano" : 20,
+        "dano" : 40,
         "intervalo":2,
         "stamina" : 15
 
 
     },
     "raio do trovão": {
-        "dano" : 35,
+        "dano" : 55,
         "intervalo": 4,
         "stamina"  : 25
 
     },
     "cura divina": {
-        "dano" : 30,
+        "dano" : 0,
         "intervalo": 3,
-        "cura" :30,
-        "stamina" : 20
+        "cura" :80,
+        "stamina" : 30
 
 
     },
@@ -68,7 +68,7 @@ ATAQUES = {
         "stamina" :20
 
     },
-    "investida psicotica": {
+    "investida psicótica": {
         "dano" : 35,
         "intervalo": 4,
         "stamina" :25
@@ -120,9 +120,9 @@ ATAQUES = {
 
     },
     "rebite": {
-        "dano" : 35,
+        "dano" : 0,
         "intervalo": 4,
-        "cura" : 35,
+        "cura" : 60,
         "stamina" :25
 
 
@@ -186,7 +186,7 @@ DANOS_ATK_INI = {
 
     "ressurgir" : {
         "dano" : 0,
-        "intervalo":6,
+        "intervalo":8,
         "cura" : 150,
         "stamina": 60
 
