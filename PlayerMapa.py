@@ -9,7 +9,6 @@ class PlayerMapa(pygame.sprite.Sprite):
         self.largura_sprite = 32
         self.altura_sprite = 32
 
-        # O dicionário de animações ainda é útil para sabermos quantos quadros existem por direção
         self.animations = {'down': [], 'left': [], 'right': [], 'up': []}
         self.carregar_animacoes_placeholder()  # Apenas para contar os quadros
 
