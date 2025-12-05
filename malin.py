@@ -69,7 +69,7 @@ pygame.init()
 pygame.mixer.init()
 LARGURA_TELA, ALTURA_TELA = 800, 600
 tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
-pygame.display.set_caption("Meu RPG Gráfico")
+pygame.display.set_caption("hollow")
 
 try:
     background_image = pygame.image.load('background.png').convert()
